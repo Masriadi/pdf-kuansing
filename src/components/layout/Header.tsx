@@ -189,7 +189,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                 />
               </div>
               <span className="text-base font-semibold tracking-tight" data-testid="brand-name">
-                <span className="text-gradient">PDF</span>{' '}
+                <span className="text-gradient">PDF</span>
                 <span className="text-[hsl(var(--color-foreground))]">Kuansing</span>
               </span>
             </Link>
