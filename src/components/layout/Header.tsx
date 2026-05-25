@@ -171,8 +171,8 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
         }`}
       role="banner"
     >
-      <div className="container mx-auto px-4">
-        <div className="flex h-20 items-center justify-between">
+      <div className="container mx-auto px-3">
+        <div className="flex h-14 items-center justify-between">
           {/* Logo and Brand */}
           <div className="flex flex-1 items-center gap-2">
             <Link
@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               className="group flex items-center gap-2.5 text-xl font-bold text-[hsl(var(--color-foreground))] hover:opacity-90 transition-opacity"
               aria-label={`${t('brand')} - ${t('navigation.home')}`}
             >
-              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden shadow-lg shadow-primary/25 transition-transform group-hover:scale-105">
+              <div className="relative flex h-7 w-7 items-center justify-center overflow-hidden shadow-md shadow-primary/20 transition-transform group-hover:scale-105 rounded">
                 <img
                   src="/images/logo/logo-kuansing.png"
                   alt=""
@@ -188,15 +188,16 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
                   aria-hidden="true"
                 />
               </div>
-              <span className="text-xl tracking-tight" data-testid="brand-name">
-                {t('brand')}
+              <span className="text-base font-semibold tracking-tight" data-testid="brand-name">
+                <span className="text-gradient">PDF</span>{' '}
+                <span className="text-[hsl(var(--color-foreground))]">Kuansing</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav
-            className={`hidden md:flex items-center gap-1 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] p-1.5 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
+            className={`hidden md:flex items-center gap-0.5 rounded-full border border-[hsl(var(--color-border))/0.4] bg-[hsl(var(--color-background))/0.5] px-1 py-1 backdrop-blur-sm shadow-sm transition-all duration-300 ${isSearchOpen ? 'opacity-0 translate-y-[-10px] pointer-events-none' : 'opacity-100 translate-y-0'
               }`}
             role="navigation"
             aria-label="Main navigation"
@@ -205,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-4 py-1.5 text-sm font-medium text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5] rounded-full transition-all"
+                className="px-3 py-1 text-xs font-medium text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))] hover:bg-[hsl(var(--color-muted))/0.5] rounded-full transition-all"
               >
                 {item.label}
               </Link>
@@ -213,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({ locale, showSearch = true }) => 
           </nav>
 
           {/* Right side actions */}
-          <div className="flex flex-1 items-center justify-end gap-3">
+          <div className="flex flex-1 items-center justify-end gap-2">
             {/* Search */}
             {showSearch && (
               <div className="relative" ref={searchContainerRef}>

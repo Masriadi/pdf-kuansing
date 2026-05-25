@@ -14,9 +14,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const sizeStyles: Record<CardSize, string> = {
-  sm: 'p-3',
-  md: 'p-4',
-  lg: 'p-6',
+  sm: 'p-2.5',
+  md: 'p-3.5',
+  lg: 'p-5',
 };
 
 const variantStyles: Record<CardVariant, string> = {

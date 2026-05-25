@@ -115,7 +115,7 @@ export function ToolGrid({
   // Render grouped by category
   if (showCategoryHeaders && groupedTools) {
     return (
-      <div className={`space-y-8 ${className}`} data-testid="tool-grid">
+      <div className={`space-y-6 ${className}`} data-testid="tool-grid">
         {Object.entries(groupedTools).map(([cat, categoryTools]) => {
           if (categoryTools.length === 0) return null;
 
@@ -124,15 +124,15 @@ export function ToolGrid({
 
           return (
             <section key={cat} data-testid={`tool-grid-category-${cat}`}>
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold text-[hsl(var(--color-foreground))]">
+              <div className="mb-3">
+                <h2 className="text-base font-semibold text-[hsl(var(--color-foreground))]">
                   {categoryName}
                 </h2>
-                <p className="text-sm text-[hsl(var(--color-muted-foreground))]">
+                <p className="text-xs text-[hsl(var(--color-muted-foreground))]">
                   {categoryInfo.description}
                 </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                 {categoryTools.map(tool => (
                   <ToolCard
                     key={tool.id}
@@ -152,7 +152,7 @@ export function ToolGrid({
   // Render flat grid
   return (
     <div
-      className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
+      className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ${className}`}
       data-testid="tool-grid"
     >
       {filteredTools.map(tool => (
