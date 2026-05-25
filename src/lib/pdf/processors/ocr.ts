@@ -18,7 +18,7 @@ import { loadPdfjs, loadPdfLib } from '../loader';
 /**
  * Supported OCR languages
  */
-export type OCRLanguage = 'eng' | 'chi_sim' | 'chi_tra' | 'jpn' | 'kor' | 'spa' | 'fra' | 'deu' | 'por' | 'ara';
+export type OCRLanguage = 'eng' | 'chi_sim' | 'chi_tra' | 'jpn' | 'kor' | 'spa' | 'fra' | 'deu' | 'por' | 'ara' | 'ind';
 
 /**
  * OCR options
@@ -61,6 +61,7 @@ export const OCR_LANGUAGE_NAMES: Record<OCRLanguage, string> = {
   deu: 'German',
   por: 'Portuguese',
   ara: 'Arabic',
+  ind: 'Indonesian',
 };
 
 // Tesseract worker type
