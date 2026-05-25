@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { Shield, Zap, Globe, Heart, Code, Users, ArrowRight } from 'lucide-react';
+import { Shield, Zap, Globe, Heart, Code, Users, ArrowRight, Github } from 'lucide-react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
@@ -150,8 +150,49 @@ export default function AboutPageClient({ locale }: AboutPageClientProps) {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Source Code Section - AGPL-3.0 Compliance */}
         <section className="py-10 bg-[hsl(var(--color-primary)/0.05)]">
+          <div className="container mx-auto px-3">
+            <div className="max-w-xl mx-auto text-center">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 mb-3 rounded-full bg-[hsl(var(--color-primary)/0.1)] border border-[hsl(var(--color-primary)/0.2)]">
+                <Code className="h-3.5 w-3.5 text-[hsl(var(--color-primary))]" aria-hidden="true" />
+                <span className="text-xs font-medium text-[hsl(var(--color-primary))]">Open Source</span>
+              </div>
+              <h2 className="text-xl font-bold text-[hsl(var(--color-foreground))] mb-2">
+                Source Code Available
+              </h2>
+              <p className="text-sm text-[hsl(var(--color-muted-foreground))] mb-4">
+                {tCommon('brand')} is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+                In accordance with Section 13 of the AGPL-3.0, the complete source code of this modified version
+                is publicly available. You have the right to inspect, modify, and redistribute this software.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                <a
+                  href="https://github.com/Masriadi/pdf-kuansing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="primary" size="sm">
+                    <Github className="mr-1.5 h-3.5 w-3.5" />
+                    View Source Code
+                  </Button>
+                </a>
+                <a
+                  href="https://github.com/PDFCraftTool/pdfcraft"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button variant="outline" size="sm">
+                    Original PDFCraft
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-10">
           <div className="container mx-auto px-3">
             <div className="max-w-xl mx-auto text-center">
               <h2 className="text-xl font-bold text-[hsl(var(--color-foreground))] mb-2">

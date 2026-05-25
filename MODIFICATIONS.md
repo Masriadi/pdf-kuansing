@@ -32,6 +32,17 @@ The following modifications were made to the original PDFCraft codebase to creat
 - Updated service worker cache names and IndexedDB database names
 - Updated CSS class names and console log prefixes in the PDF editor tool
 
+## Additional Modifications (May 25, 2026)
+
+### UI/UX Redesign
+- Redesigned color scheme from blue/indigo to green/teal government palette (primary: #16967e)
+- Updated accent color to golden amber for a warmer, more official feel
+- Made overall layout more compact: reduced header height, card padding, section spacing, and font sizes
+- Increased tool grid density from 4 to 5 columns on large screens
+- Applied text gradient effect to "PDF" in the navbar brand logo
+- Redesigned About page with more compact spacing and proportions
+- Added AGPL-3.0 source code notice to Footer and About page (Section 13 compliance)
+
 ## Date of Modification
 
 **May 25, 2026**

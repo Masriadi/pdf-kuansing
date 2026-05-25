@@ -164,15 +164,38 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="pt-5 border-t border-[hsl(var(--color-border))] flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-[hsl(var(--color-muted-foreground))]">
-            &copy; {currentYear} {t('brand')}. {t('footer.copyright', { year: '' }).replace(/^\d{4}\s*/, '')}
-          </p>
-          <div className="flex items-center gap-4">
-            <Link href={`/${locale}/terms`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Terms</Link>
-            <Link href={`/${locale}/privacy`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Privacy</Link>
-            <Link href={`/${locale}/cookies`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Cookies</Link>
+        {/* Copyright & License */}
+        <div className="pt-5 border-t border-[hsl(var(--color-border))] flex flex-col gap-3">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-[hsl(var(--color-muted-foreground))]">
+              &copy; {currentYear} {t('brand')}. {t('footer.copyright', { year: '' }).replace(/^\d{4}\s*/, '')}
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href={`/${locale}/terms`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Terms</Link>
+              <Link href={`/${locale}/privacy`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Privacy</Link>
+              <Link href={`/${locale}/cookies`} className="text-[10px] text-[hsl(var(--color-muted-foreground))] hover:text-[hsl(var(--color-foreground))]">Cookies</Link>
+            </div>
+          </div>
+          {/* AGPL-3.0 Source Code Notice */}
+          <div className="flex items-center justify-center gap-1.5 text-[10px] text-[hsl(var(--color-muted-foreground))]">
+            <span>Source code available under</span>
+            <a
+              href="https://github.com/Masriadi/pdf-kuansing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[hsl(var(--color-primary))] hover:underline font-medium"
+            >
+              AGPL-3.0
+            </a>
+            <span>— a fork of</span>
+            <a
+              href="https://github.com/PDFCraftTool/pdfcraft"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[hsl(var(--color-primary))] hover:underline font-medium"
+            >
+              PDFCraft
+            </a>
           </div>
         </div>
       </div>
