@@ -1,4 +1,4 @@
-# PDFCraft Static Export Deployment Guide
+# PDF Kuansing Static Export Deployment Guide
 
 This project is configured for static export, making it deployable to any static hosting provider.
 
@@ -89,7 +89,7 @@ The `.github/workflows/deploy.yml` workflow handles automatic deployment.
 
 ### 4. Cloudflare Pages
 
-PDFCraft uses a custom asset chunking mechanism to bypass the 25 MiB file size limit on Cloudflare Pages. Large LibreOffice WASM files are automatically split into ~20MB chunks during the build process and reassembled on the client side.
+PDF Kuansing uses a custom asset chunking mechanism to bypass the 25 MiB file size limit on Cloudflare Pages. Large LibreOffice WASM files are automatically split into ~20MB chunks during the build process and reassembled on the client side.
 
 **Automatic Deployment:**
 1. Connect repository in [Cloudflare Pages](https://pages.cloudflare.com)
@@ -408,7 +408,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ## 🌐 Subpath Deployment
 
-PDFCraft supports deployment under a subpath (e.g., `https://your-domain.com/pdfcraft/`). This is useful for hosting the app as a part of a larger website.
+PDF Kuansing supports deployment under a subpath (e.g., `https://your-domain.com/pdfcraft/`). This is useful for hosting the app as a part of a larger website.
 
 ### Configuration
 
@@ -470,7 +470,7 @@ Update your workflow to include the environment variable in the build step:
 
 ## 🌐 Multi-language Routes
 
-PDFCraft supports multiple languages. The static export generates pages for all locales:
+PDF Kuansing supports multiple languages. The static export generates pages for all locales:
 
 | Locale | URL Pattern | Example |
 |--------|-------------|---------|
@@ -513,7 +513,7 @@ The build includes:
 
 ## 📦 LibreOffice WASM Architecture
 
-PDFCraft uses [LibreOffice WASM](https://github.com/nichdiekuh/libreoffice-wasm) (`@matbee/libreoffice-converter`) for document conversion (Word, Excel, PowerPoint, RTF to PDF). Understanding the file serving architecture is important for deployment.
+PDF Kuansing uses [LibreOffice WASM](https://github.com/nichdiekuh/libreoffice-wasm) (`@matbee/libreoffice-converter`) for document conversion (Word, Excel, PowerPoint, RTF to PDF). Understanding the file serving architecture is important for deployment.
 
 ### File Layout
 

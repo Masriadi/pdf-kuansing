@@ -1,8 +1,8 @@
 [package]
-name = "pdfcraft"
+name = "pdf-kuansing"
 version = "0.1.0"
-description = "PDFCraft Desktop Application"
-authors = ["PDFCraft"]
+description = "PDF Kuansing Desktop Application"
+authors = ["Diskominfo Kabupaten Kuantan Singingi"]
 edition = "2021"
 
 [build-dependencies]

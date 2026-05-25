@@ -2,15 +2,15 @@
  * Site configuration
  */
 export const siteConfig = {
-  name: 'PDFCraft',
-  description: 'Professional PDF Tools - Free, Private & Browser-Based. Merge, split, compress, convert, and edit PDF files online without uploading to servers.',
-  url: 'https://pdfcraft.devtoolcafe.com',
+  name: 'PDF Kuansing',
+  description: 'Perangkat pengolah PDF berbasis peramban untuk kebutuhan pemerintahan Kabupaten Kuantan Singingi. Aman, privat, dan berjalan sepenuhnya di perangkat lokal.',
+  url: 'https://pdfkuansing.example.com',
   ogImage: '/images/og-image.png',
   links: {
-    github: 'https://github.com/PDFCraftTool/pdfcraft',
-    twitter: 'https://twitter.com/pdfcraft',
+    github: 'https://github.com/Masriadi/pdf-kuansing',
+    twitter: '',
   },
-  creator: 'PDFCraft Team',
+  creator: 'Diskominfo Kabupaten Kuantan Singingi',
   keywords: [
     'PDF tools',
     'PDF editor',
@@ -18,17 +18,18 @@ export const siteConfig = {
     'split PDF',
     'compress PDF',
     'convert PDF',
-    'free PDF tools',
-    'online PDF editor',
+    'PDF Kuansing',
+    'Kuansing',
+    'Kuantan Singingi',
     'browser-based PDF',
     'private PDF processing',
   ],
   // SEO-related settings
   seo: {
-    titleTemplate: '%s | PDFCraft',
-    defaultTitle: 'PDFCraft - Professional PDF Tools',
-    twitterHandle: '@pdfcraft',
-    locale: 'en_US',
+    titleTemplate: '%s | PDF Kuansing',
+    defaultTitle: 'PDF Kuansing - Perangkat PDF Aparatur',
+    twitterHandle: '',
+    locale: 'id_ID',
   },
 };
 

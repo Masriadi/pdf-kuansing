@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import '@/app/globals.css';
 
 export const metadata: Metadata = {
-  title: 'PDFCraft - Professional PDF Tools',
-  description: 'Free online PDF tools for merging, splitting, compressing, and converting PDF files. All processing happens in your browser for maximum privacy.',
+  title: 'PDF Kuansing - Perangkat PDF Aparatur',
+  description: 'Perangkat pengolah PDF berbasis peramban untuk kebutuhan pemerintahan Kabupaten Kuantan Singingi. Semua proses berjalan di perangkat lokal untuk keamanan maksimal.',
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: '/images/favicon/favicon.ico',
+    shortcut: '/images/favicon/favicon.ico',
+    apple: '/images/favicon/kuansing-icon.png',
   },
 };
 

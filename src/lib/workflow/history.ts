@@ -7,7 +7,7 @@ import type { WorkflowExecutionRecord, WorkflowHistoryStorage } from '@/types/wo
 import type { WorkflowNode, WorkflowEdge } from '@/types/workflow';
 import { logger } from '@/lib/utils/logger';
 
-const STORAGE_KEY = 'pdfcraft_workflow_history';
+const STORAGE_KEY = 'pdf-kuansing-workflow-history';
 const MAX_RECORDS = 50; // Keep last 50 executions
 
 /**

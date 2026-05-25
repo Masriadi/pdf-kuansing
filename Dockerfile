@@ -1,5 +1,5 @@
 # =============================================================================
-# PDFCraft Production Dockerfile
+# PDF Kuansing Production Dockerfile
 # Multi-stage build for optimized image size
 # Optimized with BuildKit cache mounts for faster builds
 # =============================================================================
@@ -37,18 +37,18 @@ RUN --mount=type=cache,target=/root/.npm \
 FROM nginx:1.25-alpine AS production
 
 # Add labels for GitHub Container Registry
-LABEL org.opencontainers.image.source="https://github.com/PDFCraftTool/pdfcraft"
-LABEL org.opencontainers.image.description="PDFCraft - Professional PDF Tools, Free, Private & Browser-Based"
+LABEL org.opencontainers.image.source="https://github.com/Masriadi/pdf-kuansing"
+LABEL org.opencontainers.image.description="PDF Kuansing - Perangkat PDF untuk ASN Kabupaten Kuantan Singingi"
 LABEL org.opencontainers.image.licenses="AGPL-3.0"
-LABEL org.opencontainers.image.title="PDFCraft"
-LABEL org.opencontainers.image.vendor="PDFCraftTool"
+LABEL org.opencontainers.image.title="PDF Kuansing"
+LABEL org.opencontainers.image.vendor="Diskominfo Kabupaten Kuantan Singingi"
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY security-headers.conf /etc/nginx/security-headers.conf
 
 # Copy the static export from builder stage
-COPY --from=builder /app/out /website/pdfcraft
+COPY --from=builder /app/out /website/pdf-kuansing
 
 # Expose port 80
 EXPOSE 80

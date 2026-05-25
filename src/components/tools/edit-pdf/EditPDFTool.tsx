@@ -72,11 +72,11 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                 (btn as HTMLElement).style.display = 'none';
               }
             });
-          }          // 3. Inject PDFCraft Enrichment Script
+          }          // 3. Inject PDF Kuansing Enrichment Script
           const patchScript = doc.createElement('script');
           patchScript.textContent = `
             (function() {
-              console.log('[PDFCraft Patch] Initializing annotation patches...');
+              console.log('[PDF Kuansing Patch] Initializing annotation patches...');
 
               let undoStack = [];
               let redoStack = [];
@@ -100,7 +100,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                 const ext = window.pdfjsAnnotationExtensionInstance;
                 if (ext) {
                   clearInterval(initInterval);
-                  console.log('[PDFCraft Patch] pdfjsAnnotationExtensionInstance found! Setting up patches...');
+                  console.log('[PDF Kuansing Patch] pdfjsAnnotationExtensionInstance found! Setting up patches...');
                   setupCloudFix();
                   setupColorPickerAndStroke();
                   setupUndoRedoAndAuthorPatch();
@@ -115,7 +115,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                   if (activeTool === 'cloud') {
                     const konvaContent = document.querySelector('.konvajs-content');
                     if (konvaContent) {
-                      console.log('[PDFCraft Patch] Intercepted dblclick for cloud tool, dispatching to Konva stage.');
+                      console.log('[PDF Kuansing Patch] Intercepted dblclick for cloud tool, dispatching to Konva stage.');
                       const dblEvent = new MouseEvent('dblclick', {
                         bubbles: true,
                         cancelable: true,
@@ -136,7 +136,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                     if (activeTool === 'cloud') {
                       const konvaContent = document.querySelector('.konvajs-content');
                       if (konvaContent) {
-                        console.log('[PDFCraft Patch] Intercepted Enter key for cloud tool, dispatching dblclick to end drawing.');
+                        console.log('[PDF Kuansing Patch] Intercepted Enter key for cloud tool, dispatching dblclick to end drawing.');
                         const dblEvent = new MouseEvent('dblclick', {
                           bubbles: true,
                           cancelable: true,
@@ -153,10 +153,10 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                 // Inject picker for Highlight tool
                 const hlColorPicker = document.getElementById('editorHighlightColorPicker');
                 if (hlColorPicker) {
-                  if (!hlColorPicker.querySelector('.pdfcraft-custom-hl-picker')) {
+                  if (!hlColorPicker.querySelector('.pdf-kuansing-custom-hl-picker')) {
                     const picker = document.createElement('input');
                     picker.type = 'color';
-                    picker.className = 'pdfcraft-custom-hl-picker';
+                    picker.className = 'pdf-kuansing-custom-hl-picker';
                     picker.style.cssText = 'width:28px; height:28px; border:2px solid #ccc; border-radius:50%; padding:0; cursor:pointer; margin-left:8px; vertical-align:middle; background:none;';
                     
                     picker.addEventListener('input', function(e) {
@@ -187,12 +187,12 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
               }
 
               function injectCustomMenuControls(menu) {
-                if (menu.querySelector('.pdfcraft-custom-controls')) return;
+                if (menu.querySelector('.pdf-kuansing-custom-controls')) return;
 
-                console.log('[PDFCraft Patch] CustomAnnotationMenu opened, injecting custom controls...');
+                console.log('[PDF Kuansing Patch] CustomAnnotationMenu opened, injecting custom controls...');
 
                 const container = document.createElement('div');
-                container.className = 'pdfcraft-custom-controls';
+                container.className = 'pdf-kuansing-custom-controls';
                 container.style.cssText = 'border-top:1px solid #ccc; margin-top:8px; padding-top:8px; font-size:12px; display:flex; flex-direction:column; gap:8px; color:var(--toolbar-fg-color, #333);';
 
                 const ext = window.pdfjsAnnotationExtensionInstance;
@@ -227,7 +227,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                 nativeSliders.forEach(slider => {
                   if (slider.getAttribute('min') === '1') {
                     slider.setAttribute('min', '0');
-                    console.log('[PDFCraft Patch] Stroke width slider updated min to 0');
+                    console.log('[PDF Kuansing Patch] Stroke width slider updated min to 0');
                   }
                 });
 
@@ -242,12 +242,12 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                   
                   const fillCheckbox = document.createElement('input');
                   fillCheckbox.type = 'checkbox';
-                  fillCheckbox.id = 'pdfcraft-fill-enabled';
+                  fillCheckbox.id = 'pdf-kuansing-fill-enabled';
                   fillCheckbox.style.cssText = 'cursor:pointer;';
                   fillCheckbox.checked = selected.style?.fillEnabled || false;
                   
                   const fillLabel = document.createElement('label');
-                  fillLabel.htmlFor = 'pdfcraft-fill-enabled';
+                  fillLabel.htmlFor = 'pdf-kuansing-fill-enabled';
                   fillLabel.textContent = '启用填充色:';
                   fillLabel.style.cssText = 'cursor:pointer; user-select:none;';
 
@@ -375,7 +375,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                   lastStateStr = stateStr;
                   updateUndoRedoButtonsState();
                 } catch (err) {
-                  console.error('[PDFCraft Patch] Failed to load state', err);
+                  console.error('[PDF Kuansing Patch] Failed to load state', err);
                 } finally {
                   setTimeout(() => {
                     isDoingUndoRedo = false;
@@ -386,11 +386,11 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
               function injectUndoRedoButtons() {
                 const customToolbar = document.querySelector('.CustomToolbar');
                 if (customToolbar) {
-                  if (customToolbar.querySelector('.pdfcraft-undo-btn')) return;
+                  if (customToolbar.querySelector('.pdf-kuansing-undo-btn')) return;
                   const btnList = customToolbar.querySelector('ul') || customToolbar;
 
                   const undoLi = document.createElement('li');
-                  undoLi.className = 'pdfcraft-undo-btn';
+                  undoLi.className = 'pdf-kuansing-undo-btn';
                   undoLi.style.cssText = 'display:inline-block; margin-right:8px;';
 
                   const undoBtn = document.createElement('button');
@@ -403,7 +403,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
                   undoLi.appendChild(undoBtn);
 
                   const redoLi = document.createElement('li');
-                  redoLi.className = 'pdfcraft-redo-btn';
+                  redoLi.className = 'pdf-kuansing-redo-btn';
                   redoLi.style.cssText = 'display:inline-block; margin-right:8px;';
 
                   const redoBtn = document.createElement('button');
@@ -426,8 +426,8 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
               }
 
               function updateUndoRedoButtonsState() {
-                const undoBtn = document.querySelector('.pdfcraft-undo-btn button');
-                const redoBtn = document.querySelector('.pdfcraft-redo-btn button');
+                const undoBtn = document.querySelector('.pdf-kuansing-undo-btn button');
+                const redoBtn = document.querySelector('.pdf-kuansing-redo-btn button');
                 
                 if (undoBtn) {
                   const canUndo = undoStack.length > 1;
@@ -443,7 +443,7 @@ export function EditPDFTool({ className = '' }: EditPDFToolProps) {
             })();
           `;
           doc.body.appendChild(patchScript);
-          console.log('[PDFCraft Patch] Enrichment script successfully injected into iframe!');
+          console.log('[PDF Kuansing Patch] Enrichment script successfully injected into iframe!');
         }
       } catch (e) {
         console.warn('Could not access iframe content to inject patches', e);

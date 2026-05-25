@@ -14,7 +14,7 @@ export const dynamic = 'force-static';
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: siteConfig.name,
-    short_name: 'PDFCraft',
+    short_name: 'PDF Kuansing',
     description: siteConfig.description,
     start_url: '/',
     display: 'standalone',
@@ -24,20 +24,20 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ['productivity', 'utilities'],
     icons: [
       {
-        src: '/favicon.svg',
-        sizes: 'any',
-        type: 'image/svg+xml',
+        src: '/images/favicon/favicon.ico',
+        sizes: '48x48',
+        type: 'image/x-icon',
         purpose: 'any',
       },
       {
-        src: '/icon-192.png',
-        sizes: '192x192',
+        src: '/images/favicon/kuansing-icon.png',
+        sizes: '128x128',
         type: 'image/png',
-        purpose: 'maskable',
+        purpose: 'any',
       },
       {
-        src: '/icon-512.png',
-        sizes: '512x512',
+        src: '/images/favicon/kuansing-icon-114x114.png',
+        sizes: '114x114',
         type: 'image/png',
         purpose: 'maskable',
       },
