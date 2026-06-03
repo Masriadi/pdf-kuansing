@@ -962,6 +962,28 @@
       },
       "successMessage": "OCR Berhasil! Dokumen Anda sekarang memiliki teks yang dapat dicari/diedit."
     },
+    "ocrPdf": {
+      "uploadLabel": "Unggah File PDF",
+      "uploadDescription": "Seret dan letakkan file PDF hasil scan di sini, atau klik untuk menelusuri.",
+      "optionsTitle": "Opsi OCR",
+      "languages": "Bahasa",
+      "languagesHint": "Pilih satu atau lebih bahasa untuk akurasi yang lebih baik",
+      "outputFormat": "Format Output",
+      "formatText": "File Teks (.txt)",
+      "formatPdf": "PDF yang Dapat Dicari",
+      "quality": "Kualitas",
+      "qualityLow": "Rendah (Lebih Cepat)",
+      "qualityMedium": "Sedang (Direkomendasikan)",
+      "qualityHigh": "Tinggi (Lebih Lambat)",
+      "pageRange": "Rentang Halaman",
+      "pageRangePlaceholder": "misal, 1-3, 5, 7",
+      "pageRangeHint": "Kosongkan untuk semua halaman",
+      "processButton": "Mulai OCR",
+      "previewTitle": "Pratinjau Teks Hasil Ekstraksi",
+      "successMessage": "OCR berhasil! Klik tombol unduh untuk menyimpan file Anda.",
+      "infoTitle": "Tentang OCR",
+      "infoText": "OCR (Optical Character Recognition) mengekstrak teks dari dokumen dan gambar hasil scan. Untuk hasil terbaik, gunakan scan berkualitas tinggi dan pilih bahasa yang sesuai."
+    },
     "bookmark": {
       "uploadLabel": "Unggah File PDF",
       "uploadDescription": "Seret dan letakkan file PDF untuk mengedit bookmark.",
