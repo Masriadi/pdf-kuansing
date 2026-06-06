@@ -279,32 +279,62 @@ export class OCRProcessor extends BasePDFProcessor {
       viewport: viewport,
     }).promise;
 
-    // Perform OCR
-    const result = await (this.tesseractWorker as any).recognize(canvas);
+    // Perform OCR (enable blocks output for word coordinates)
+    const result = await (this.tesseractWorker as any).recognize(
+      canvas,
+      undefined,
+      { blocks: true }
+    );
     
     // Coordinate conversion from canvas space to PDF coordinate space (y-flipped)
     const pdfViewport = page.getViewport({ scale: 1.0 });
     const pageHeight = pdfViewport.height;
+    const pageWidth = pdfViewport.width;
 
-    const words = (result.data.words || []).map((w: any) => {
-      const { x0, y0, x1, y1 } = w.bbox;
+    // Extract words from Tesseract.js v6 blocks hierarchy:
+    // blocks -> paragraphs -> lines -> words (each with bbox)
+    let rawWords: any[] = [];
+    if (result.data.blocks) {
+      for (const block of result.data.blocks) {
+        for (const paragraph of block.paragraphs || []) {
+          for (const line of paragraph.lines || []) {
+            for (const word of line.words || []) {
+              rawWords.push(word);
+            }
+          }
+        }
+      }
+    }
+
+    const words = rawWords.map((w: any) => {
+      const bbox = w.bbox || {};
+      // Handle both {x0,y0,x1,y1} and {x,y,width,height} formats
+      const x0 = bbox.x0 ?? bbox.x ?? 0;
+      const y0 = bbox.y0 ?? bbox.y ?? 0;
+      const x1 = bbox.x1 ?? (bbox.x !== undefined && bbox.width !== undefined ? bbox.x + bbox.width : x0 + 10);
+      const y1 = bbox.y1 ?? (bbox.y !== undefined && bbox.height !== undefined ? bbox.y + bbox.height : y0 + 10);
+      
       const scale = options.scale;
       
       const pdfX = x0 / scale;
-      const pdfY = pageHeight - (y1 / scale);
       const pdfWidth = (x1 - x0) / scale;
       const pdfHeight = (y1 - y0) / scale;
+      const fontSize = Math.max(8, Math.min(72, pdfHeight * 0.85));
+      // y1 is bottom in canvas (larger y value = lower on canvas).
+      // Flip to PDF coords: pageHeight - (y1/scale) gives bottom edge distance from PDF bottom.
+      // drawText uses baseline; shift up slightly (~20% of fontSize) so text sits inside the bbox.
+      const baselineY = pageHeight - (y1 / scale) + (fontSize * 0.2);
 
       return {
         text: w.text,
-        x: pdfX,
-        y: pdfY,
-        width: pdfWidth,
-        height: pdfHeight,
-        fontSize: pdfHeight * 0.85,
+        x: Math.max(0, pdfX),
+        y: Math.max(0, baselineY),
+        width: Math.max(1, pdfWidth),
+        height: Math.max(1, pdfHeight),
+        fontSize,
       };
     });
-
+    
     return {
       text: result.data.text,
       words,
@@ -313,6 +343,7 @@ export class OCRProcessor extends BasePDFProcessor {
 
   /**
    * Create a searchable PDF with OCR transparent text layer
+   * Creates a fresh PDF with original page rendered as image + invisible text overlay
    */
   private async createSearchablePDF(
     originalFile: File,
@@ -320,44 +351,80 @@ export class OCRProcessor extends BasePDFProcessor {
     options: OCROptions
   ): Promise<Blob> {
     const pdfLib = await loadPdfLib();
+    const pdfjs = await loadPdfjs();
 
-    // Load original PDF
+    // Load original PDF for rendering
     const arrayBuffer = await originalFile.arrayBuffer();
-    const pdfDoc = await pdfLib.PDFDocument.load(arrayBuffer);
+    const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
 
-    // Embed standard fonts (Helvetica is safe and standard)
-    const font = await pdfDoc.embedFont(pdfLib.StandardFonts.Helvetica);
+    // Create new PDF document
+    const newPdfDoc = await pdfLib.PDFDocument.create();
+    const font = await newPdfDoc.embedFont(pdfLib.StandardFonts.Helvetica);
 
     for (const pageData of ocrPagesData) {
-      const pageIdx = pageData.pageNum - 1;
-      if (pageIdx >= pdfDoc.getPageCount()) continue;
+      const pageNum = pageData.pageNum;
+      if (pageNum > pdf.numPages) continue;
 
-      const page = pdfDoc.getPage(pageIdx);
+      const pdfPage = await pdf.getPage(pageNum);
+      const viewport = pdfPage.getViewport({ scale: options.scale });
 
-      // Draw invisible text items
+      // Render page to canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) continue;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await pdfPage.render({ canvasContext: ctx, viewport }).promise;
+
+      // Convert canvas to JPEG image for embedding (using toBlob for memory efficiency)
+      const imageBlob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob((b) => resolve(b), 'image/jpeg', 0.85)
+      );
+      if (!imageBlob) continue;
+      const imageBytes = new Uint8Array(await imageBlob.arrayBuffer());
+      const embeddedImage = await newPdfDoc.embedJpg(imageBytes);
+
+      // Create new page with same dimensions (in PDF points = canvas/scale)
+      const pageWidth = viewport.width / options.scale;
+      const pageHeight = viewport.height / options.scale;
+      const newPage = newPdfDoc.addPage([pageWidth, pageHeight]);
+
+      // Draw the scanned image on the page
+      newPage.drawImage(embeddedImage, {
+        x: 0,
+        y: 0,
+        width: pageWidth,
+        height: pageHeight,
+      });
+
+      // Draw invisible text overlay on top of the image
       for (const w of pageData.words) {
         if (!w.text.trim()) continue;
         try {
-          page.drawText(w.text, {
+          // w.y is already calculated as baseline position in ocrPage
+          newPage.drawText(w.text, {
             x: w.x,
             y: w.y,
-            size: Math.max(5, w.fontSize),
+            size: w.fontSize,
             font,
             color: pdfLib.rgb(0, 0, 0),
-            opacity: 0.0, // Totally invisible text overlay
+            opacity: 0.0, // Completely invisible but selectable
           });
         } catch (e) {
-          console.error(`Failed to overlay invisible text: ${w.text}`, e);
+          console.error(`Failed to overlay text: ${w.text}`, e);
         }
       }
     }
 
-    // Add metadata to indicate OCR was performed
-    pdfDoc.setTitle(`${originalFile.name} (OCR)`);
-    pdfDoc.setSubject('OCR processed document with invisible text layer');
-    pdfDoc.setKeywords(['OCR', 'searchable', ...options.languages]);
+    // Add metadata
+    newPdfDoc.setTitle(`${originalFile.name} (OCR)`);
+    newPdfDoc.setSubject('OCR processed document with searchable text layer');
+    newPdfDoc.setKeywords(['OCR', 'searchable', ...options.languages]);
 
-    const pdfBytes = await pdfDoc.save({ useObjectStreams: true });
+    const pdfBytes = await newPdfDoc.save({ useObjectStreams: true });
     return new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
   }
 }
